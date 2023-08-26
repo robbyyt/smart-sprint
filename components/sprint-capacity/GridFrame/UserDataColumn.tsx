@@ -1,6 +1,6 @@
 'use client';
 import { User } from '@/lib/types/user';
-import { Avatar } from '@/components/ui/avatar';
+import { Avatar } from '@/components/ui/Avatar';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 
 interface UserDataColumnProps {

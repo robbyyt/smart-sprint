@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
+import { Avatar, AvatarImage, AvatarFallback } from '../ui/Avatar';
 
 interface StackedAvatarsProps {
   teamId: number | string;
