@@ -1,6 +1,6 @@
 import { range } from '@/lib/utils/array';
 import type { User } from '@/lib/types/user';
-import UserDataColumn from './UserDataColumn';
+import UserDataColumn from './user-data-column';
 
 interface FrameRowProps {
   row: number;

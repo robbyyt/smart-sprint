@@ -1,5 +1,5 @@
-import SprintGridView from '@/components/sprint-capacity/SprintGridView';
-import TeamListing from '@/components/teams/TeamList';
+import SprintGridView from '@/components/sprint-capacity/sprint-grid-view';
+import TeamListing from '@/components/teams/team-list';
 import { teamData } from '@/components/teams/mock-data';
 
 export default function Home() {

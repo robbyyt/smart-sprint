@@ -1,4 +1,4 @@
-import TeamListItem from './TeamListItem';
+import TeamListItem from './team-list-item';
 import { TeamData } from '@/lib/types/team';
 
 interface TeamListingProps {

@@ -1,6 +1,6 @@
-import NavLinks from './NavLinks';
-import TeamSwitcher from './TeamSwitcher';
-import { UserProfileLinks } from './UserProfileLinks';
+import NavLinks from './nav-links';
+import TeamSwitcher from './team-switcher';
+import { UserProfileLinks } from './user-profile-links';
 
 function Header() {
   return (

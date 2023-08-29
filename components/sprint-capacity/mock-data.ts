@@ -1,7 +1,7 @@
 import { addWeeks } from 'date-fns';
 import { EventType } from '@/lib/types/sprint';
 import { User } from '@/lib/types/user';
-import { SprintEventProps } from './SprintEvent';
+import { SprintEventProps } from './sprint-event';
 
 export const sampleStartDate = new Date();
 export const sampleEndDate = addWeeks(sampleStartDate, 2);

@@ -1,8 +1,8 @@
-import GridHeader from './GridHeader';
+import GridHeader from './grid-header';
 import { eachDayOfInterval } from 'date-fns';
-import GridFrame from './GridFrame';
+import GridFrame from './grid-frame';
 import { sampleStartDate, sampleEndDate, sampleUsers, events } from './mock-data';
-import SprintEvent from './SprintEvent';
+import SprintEvent from './sprint-event';
 
 const SprintGridView = () => {
   const dayArray = eachDayOfInterval({

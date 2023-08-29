@@ -1,4 +1,4 @@
-import FrameRow from './FrameRow';
+import FrameRow from './frame-row';
 import type { User } from '@/lib/types/user';
 
 interface GridFrameProps {

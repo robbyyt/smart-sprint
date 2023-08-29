@@ -1,5 +1,5 @@
 import { TeamData } from '@/lib/types/team';
-import StackedAvatars from '@/components/teams/StackedAvatars';
+import StackedAvatars from '@/components/teams/stacked-avatars';
 
 const TeamListItem = ({ totalMembers, membersToShowcase, id, name }: TeamData) => {
   return (
