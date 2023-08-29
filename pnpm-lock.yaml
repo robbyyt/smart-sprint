@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@hookform/resolvers': ^3.3.1
   '@radix-ui/react-avatar': ^1.0.3
   '@radix-ui/react-checkbox': ^1.0.4
   '@radix-ui/react-dialog': ^1.0.4
@@ -11,6 +12,7 @@ specifiers:
   '@radix-ui/react-select': ^1.2.2
   '@radix-ui/react-separator': ^1.0.3
   '@radix-ui/react-slot': ^1.0.2
+  '@radix-ui/react-toast': ^1.1.4
   '@tanstack/react-table': ^8.9.3
   '@types/node': 20.5.6
   '@types/react': 18.2.21
@@ -29,7 +31,9 @@ specifiers:
   prettier: ^3.0.2
   prettier-plugin-tailwindcss: ^0.5.3
   react: 18.2.0
+  react-day-picker: ^8.8.1
   react-dom: 18.2.0
+  react-hook-form: ^7.45.4
   tailwind-merge: ^1.14.0
   tailwindcss: 3.3.3
   tailwindcss-animate: ^1.0.6
@@ -37,6 +41,7 @@ specifiers:
   zod: ^3.22.2
 
 dependencies:
+  '@hookform/resolvers': 3.3.1_react-hook-form@7.45.4
   '@radix-ui/react-avatar': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-checkbox': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-dialog': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
@@ -47,6 +52,7 @@ dependencies:
   '@radix-ui/react-select': 1.2.2_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-separator': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-slot': 1.0.2_gq4reeurwxuj4hvyerswzzqthy
+  '@radix-ui/react-toast': 1.1.4_zkisbtryv3xtasf42ecsrjh3ky
   '@tanstack/react-table': 8.9.3_biqbaboplfbrettd7655fr4n2y
   class-variance-authority: 0.7.0
   clsx: 2.0.0
@@ -55,7 +61,9 @@ dependencies:
   lucide-react: 0.269.0_react@18.2.0
   next: 13.4.19_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
+  react-day-picker: 8.8.1_kzhlcyde2l6xjiirkbg7jzhosa
   react-dom: 18.2.0_react@18.2.0
+  react-hook-form: 7.45.4_react@18.2.0
   tailwind-merge: 1.14.0
   tailwindcss: 3.3.3
   tailwindcss-animate: 1.0.6_tailwindcss@3.3.3
@@ -155,6 +163,14 @@ packages:
 
   /@floating-ui/utils/0.1.1:
     resolution: {integrity: sha512-m0G6wlnhm/AX0H12IOWtK8gASEMffnX08RtKkCgTdHb9JpHKGloI7icFfLg9ZmQeavcvR0PKmzxClyuFPSjKWw==}
+    dev: false
+
+  /@hookform/resolvers/3.3.1_react-hook-form@7.45.4:
+    resolution: {integrity: sha512-K7KCKRKjymxIB90nHDQ7b9nli474ru99ZbqxiqDAWYsYhOsU3/4qLxW91y+1n04ic13ajjZ66L3aXbNef8PELQ==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.45.4_react@18.2.0
     dev: false
 
   /@humanwhocodes/config-array/0.11.10:
@@ -1052,6 +1068,38 @@ packages:
       '@radix-ui/react-compose-refs': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
       '@types/react': 18.2.21
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-toast/1.1.4_zkisbtryv3xtasf42ecsrjh3ky:
+    resolution: {integrity: sha512-wf+fc8DOywrpRK3jlPlWVe+ELYGHdKDaaARJZNuUTWyWYq7+ANCFLp4rTjZ/mcGkJJQ/vZ949Zis9xxEpfq9OA==}
+    peerDependencies:
+      '@types/react': '*'
+      '@types/react-dom': '*'
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      '@types/react-dom':
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.11
+      '@radix-ui/primitive': 1.0.1
+      '@radix-ui/react-collection': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-compose-refs': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-context': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-dismissable-layer': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-portal': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-presence': 1.0.1_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-primitive': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@radix-ui/react-use-callback-ref': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-use-controllable-state': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-use-layout-effect': 1.0.1_gq4reeurwxuj4hvyerswzzqthy
+      '@radix-ui/react-visually-hidden': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
+      '@types/react': 18.2.21
+      '@types/react-dom': 18.2.7
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@radix-ui/react-use-callback-ref/1.0.0_react@18.2.0:
@@ -3129,6 +3177,16 @@ packages:
   /queue-microtask/1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  /react-day-picker/8.8.1_kzhlcyde2l6xjiirkbg7jzhosa:
+    resolution: {integrity: sha512-U7RsRoRI5pyMXhKq54hS9yM11WEGkPf8hIdrxIM/sefgmQjuxazqgwcZFMiPZW/K9vtmzLZFf9bLW0wVsGYd5w==}
+    peerDependencies:
+      date-fns: ^2.28.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      date-fns: 2.30.0
+      react: 18.2.0
+    dev: false
+
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -3137,6 +3195,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form/7.45.4_react@18.2.0:
+    resolution: {integrity: sha512-HGDV1JOOBPZj10LB3+OZgfDBTn+IeEsNOKiq/cxbQAIbKaiJUe/KV8DBUzsx0Gx/7IG/orWqRRm736JwOfUSWQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

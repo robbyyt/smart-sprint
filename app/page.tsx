@@ -7,10 +7,10 @@ import { sampleTasks } from '@/components/task-list/mock-data';
 
 export default function Home() {
   return (
-    <main className='p-12'>
+    <>
       <SprintGridView />
       <TeamListing teams={teamData} />
       <DataTable columns={columns} data={sampleTasks} />
-    </main>
+    </>
   );
 }
