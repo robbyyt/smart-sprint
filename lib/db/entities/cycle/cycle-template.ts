@@ -4,7 +4,10 @@ import { BaseEntity } from '../../types';
 export interface CycleTemplateTable extends BaseEntity {
   durationInDays: number;
   hoursInWorkDay: number;
+  dayStart: string;
   includeWeekends: boolean;
+  timeZone: string;
+  teamId: number;
 }
 
 export type CycleTemplate = Selectable<CycleTemplateTable>;
