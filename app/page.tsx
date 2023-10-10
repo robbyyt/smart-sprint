@@ -9,8 +9,8 @@ export default function Home() {
   return (
     <>
       <SprintGridView />
-      <TeamListing teams={teamData} />
-      <DataTable columns={columns} data={sampleTasks} />
+      {/* <TeamListing teams={teamData} /> */}
+      {/* <DataTable columns={columns} data={sampleTasks} /> */}
     </>
   );
 }
