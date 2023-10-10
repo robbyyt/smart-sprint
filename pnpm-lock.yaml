@@ -2,7 +2,6 @@ lockfileVersion: 5.4
 
 specifiers:
   '@hookform/resolvers': ^3.3.1
-  '@planetscale/database': ^1.11.0
   '@radix-ui/react-avatar': ^1.0.3
   '@radix-ui/react-checkbox': ^1.0.4
   '@radix-ui/react-dialog': ^1.0.4
@@ -38,7 +37,6 @@ specifiers:
   react-day-picker: ^8.8.1
   react-dom: 18.2.0
   react-hook-form: ^7.45.4
-  server-only: ^0.0.1
   tailwind-merge: ^1.14.0
   tailwindcss: 3.3.3
   tailwindcss-animate: ^1.0.6
@@ -49,7 +47,6 @@ specifiers:
 
 dependencies:
   '@hookform/resolvers': 3.3.1_react-hook-form@7.45.4
-  '@planetscale/database': 1.11.0
   '@radix-ui/react-avatar': 1.0.3_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-checkbox': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
   '@radix-ui/react-dialog': 1.0.4_zkisbtryv3xtasf42ecsrjh3ky
@@ -67,14 +64,13 @@ dependencies:
   cmdk: 0.2.0_vnxzf5c44dqo4vncfl2mrh2gwm
   date-fns: 2.30.0
   kysely: 0.26.3
-  kysely-planetscale: 1.4.0_lyph6cmb6fg6n6mn7hv6ah7ic4
+  kysely-planetscale: 1.4.0_kysely@0.26.3
   lucide-react: 0.269.0_react@18.2.0
   next: 13.4.19_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-day-picker: 8.8.1_kzhlcyde2l6xjiirkbg7jzhosa
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.45.4_react@18.2.0
-  server-only: 0.0.1
   tailwind-merge: 1.14.0
   tailwindcss: 3.3.3_ts-node@10.9.1
   tailwindcss-animate: 1.0.6_tailwindcss@3.3.3
@@ -553,11 +549,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
-
-  /@planetscale/database/1.11.0:
-    resolution: {integrity: sha512-aWbU+D/IRHoDE9975y+Q4c+EwwAWxCPwFId+N1AhQVFXzbeJMkj6KN2iQtoi03elcLMRdfT+V3i9Z4WRw+/oIA==}
-    engines: {node: '>=16'}
-    dev: false
 
   /@radix-ui/number/1.0.1:
     resolution: {integrity: sha512-T5gIdVO2mmPW3NNhjNgEP3cqMXjXL9UbO0BzWcXfvdBs+BohbQxvd/K5hSVKmn9/lbTdsQVKbUcP5WLCwvUbBg==}
@@ -3007,13 +2998,12 @@ packages:
       object.values: 1.1.6
     dev: true
 
-  /kysely-planetscale/1.4.0_lyph6cmb6fg6n6mn7hv6ah7ic4:
+  /kysely-planetscale/1.4.0_kysely@0.26.3:
     resolution: {integrity: sha512-dM2xgOM50+IiOIrSCEn/6lgXcE7J752oNpV6NcIYNgG/AfYGMtWm2ZK7PyeIPy5JG1jZvQvqwTFbGK4HGH/hJw==}
     peerDependencies:
       '@planetscale/database': '*'
       kysely: '*'
     dependencies:
-      '@planetscale/database': 1.11.0
       date-fns: 2.30.0
       kysely: 0.26.3
     dev: false
@@ -3718,10 +3708,6 @@ packages:
     dependencies:
       lru-cache: 6.0.0
     dev: true
-
-  /server-only/0.0.1:
-    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
-    dev: false
 
   /shebang-command/2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
