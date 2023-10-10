@@ -1,6 +1,7 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 
+// TODO: Generate migration for this
 export interface CycleTemplateTable extends BaseEntity {
   durationInDays: number;
   hoursInWorkDay: number;

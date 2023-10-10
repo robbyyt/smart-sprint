@@ -1,6 +1,7 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 
+// TODO: Generate migration for this once user setup is done
 export interface TeamMembersTable extends BaseEntity {
   teamId: number;
   userId: number;
