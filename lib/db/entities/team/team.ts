@@ -3,6 +3,7 @@ import { BaseEntity } from '../../types';
 
 export interface TeamTable extends BaseEntity {
   name: string;
+  userId: string;
 }
 
 export type Team = Selectable<TeamTable>;
