@@ -2,6 +2,7 @@ import Header from '@/components/layout/header';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { AuthProvider } from '@/components/context/auth-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,8 +15,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <Header />
-        <main className='p-12'>{children}</main>
+        <AuthProvider>
+          <Header />
+          <main className='p-12'>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

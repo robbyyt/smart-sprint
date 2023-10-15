@@ -15,11 +15,15 @@ function generateMigrationContent(name: string): string {
   return `import { Kysely } from 'kysely';
 
 export async function up(db: Kysely<any>): Promise<void> {
-  // Migration code for "${name}"
+  await db.transaction().execute(async (trx) => {
+
+  });
 }
 
 export async function down(db: Kysely<any>): Promise<void> {
-  // Migration code for "${name}"
+  await db.transaction().execute(async (trx) => {
+
+  });
 }
 `;
 }
