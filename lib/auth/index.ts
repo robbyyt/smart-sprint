@@ -1,6 +1,6 @@
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
 import type { NextAuthOptions } from 'next-auth';
-import { getServerSession } from 'next-auth';
+import { getServerSession as nextAuthGetServerSession } from 'next-auth';
 import AtlassianProvider from 'next-auth/providers/atlassian';
 import { KyselyAdapter } from '@auth/kysely-adapter';
 
@@ -35,8 +35,8 @@ export const authConfig = {
  *  on server-side,
  * due to avoiding an extra fetch to an API Route
  * */
-export function auth(
+export function getServerSession(
   ...args: [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']] | [NextApiRequest, NextApiResponse] | []
 ) {
-  return getServerSession(...args, authConfig);
+  return nextAuthGetServerSession(...args, authConfig);
 }
