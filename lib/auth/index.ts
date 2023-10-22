@@ -22,6 +22,17 @@ export const authConfig = {
       },
     }),
   ],
+  callbacks: {
+    session({ user, session }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      };
+    },
+  },
 } satisfies NextAuthOptions;
 
 /**
