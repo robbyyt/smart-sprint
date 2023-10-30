@@ -17,7 +17,7 @@ export const authConfig = {
       clientSecret: process.env.ATLASSIAN_CLIENT_SECRET ?? '',
       authorization: {
         params: {
-          scope: 'read:jira-work write:jira-work read:jira-work read:jira-user read:me',
+          scope: 'read:jira-work write:jira-work read:jira-work read:jira-user read:me offline_access',
         },
       },
     }),

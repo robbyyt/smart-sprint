@@ -10,3 +10,5 @@ export interface TeamTable extends BaseEntity {
 export type Team = Selectable<TeamTable>;
 export type NewTeam = Insertable<TeamTable>;
 export type TeamUpdate = Updateable<TeamTable>;
+
+export type TeamId = Team['id'];

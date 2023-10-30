@@ -17,19 +17,20 @@ import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { getTeamMembership } from '@/lib/db/services/team.service';
 import CreateTeamDialogContent from './create-team-dialog-content';
+import { useRouter } from 'next/navigation';
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<typeof PopoverTrigger>;
 
 interface TeamSwitcherProps extends PopoverTriggerProps {
   teams: Awaited<ReturnType<typeof getTeamMembership>>;
+  currentTeamId: number | null;
 }
 
-type Team = TeamSwitcherProps['teams'][number];
-
-export default function TeamSwitcher({ className, teams }: TeamSwitcherProps) {
+export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSwitcherProps) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<Team>(teams[0] ?? null);
+  const selectedTeam = teams.find((team) => team.id === currentTeamId);
 
   const closeTeamDialog = useCallback(() => {
     setShowNewTeamDialog(false);
@@ -38,22 +39,37 @@ export default function TeamSwitcher({ className, teams }: TeamSwitcherProps) {
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            variant='outline'
-            role='combobox'
-            aria-expanded={open}
-            aria-label='Select a team'
-            className={cn('w-[200px] justify-between', className)}
-          >
-            <Avatar className='mr-2 h-5 w-5'>
-              <AvatarImage src={`https://avatar.vercel.sh/${selectedItem.name}.png`} alt={selectedItem.name} />
-              <AvatarFallback>SC</AvatarFallback>
-            </Avatar>
-            {selectedItem.name}
-            <CaretSortIcon className='ml-auto h-4 w-4 shrink-0 opacity-50' />
-          </Button>
-        </PopoverTrigger>
+        {selectedTeam ? (
+          <PopoverTrigger asChild>
+            <Button
+              variant='outline'
+              role='combobox'
+              aria-expanded={open}
+              aria-label='Select a team'
+              className={cn('w-[200px] justify-between truncate', className)}
+            >
+              <Avatar className='mr-2 h-5 w-5'>
+                <AvatarImage src={`https://avatar.vercel.sh/${selectedTeam.name}.png`} alt={selectedTeam.name} />
+                <AvatarFallback>SC</AvatarFallback>
+              </Avatar>
+              {selectedTeam?.name}
+              <CaretSortIcon className='ml-auto h-4 w-4 shrink-0 opacity-50' />
+            </Button>
+          </PopoverTrigger>
+        ) : (
+          <DialogTrigger asChild>
+            <Button
+              variant='outline'
+              onClick={() => {
+                setOpen(false);
+                setShowNewTeamDialog(true);
+              }}
+            >
+              <PlusCircledIcon className='mr-2 h-5 w-5' />
+              Create Team
+            </Button>
+          </DialogTrigger>
+        )}
         <PopoverContent className='w-[200px] p-0'>
           <Command>
             <CommandList>
@@ -64,8 +80,8 @@ export default function TeamSwitcher({ className, teams }: TeamSwitcherProps) {
                   <CommandItem
                     key={team.id}
                     onSelect={() => {
-                      setSelectedItem(team);
                       setOpen(false);
+                      router.push(`/dashboard/${team.id}`);
                     }}
                     className='text-sm'
                   >
@@ -73,13 +89,14 @@ export default function TeamSwitcher({ className, teams }: TeamSwitcherProps) {
                       <AvatarImage
                         src={`https://avatar.vercel.sh/${team.name}.png`}
                         alt={team.name}
-                        className={selectedItem.name !== team.name ? 'grayscale' : ''}
+                        className={selectedTeam?.id !== team.id ? 'grayscale' : ''}
                       />
                       <AvatarFallback>SC</AvatarFallback>
                     </Avatar>
+                    <p className='hidden'>{team.id}</p>
                     <p className='overflow-hidden text-ellipsis'>{team.name}</p>
                     <CheckIcon
-                      className={cn('ml-auto h-4 w-4', selectedItem.name === team.name ? 'opacity-100' : 'opacity-0')}
+                      className={cn('ml-auto h-4 w-4', selectedTeam?.id === team.id ? 'opacity-100' : 'opacity-0')}
                     />
                   </CommandItem>
                 ))}

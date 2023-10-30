@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { z } from 'zod';
 
 const MIN_TEAM_NAME_CHARS = 3;
@@ -14,3 +15,5 @@ const teamNameSchema = z
 export const createTeamSchema = z.object({
   name: teamNameSchema,
 });
+
+export type CreateTeamInput = z.infer<typeof createTeamSchema>;

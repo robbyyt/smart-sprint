@@ -1,24 +1,22 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { createTeamSchema } from '@/lib/schema/team';
+import { CreateTeamInput, createTeamSchema } from '@/lib/schema/team';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { useToast } from '../ui/use-toast';
-import { createTeam } from '@/lib/api/services/team.service';
 import { mappedZodErrorSchema, setZodErrorsOnForm } from '@/lib/utils/zod';
+import { createTeam } from '@/lib/data/team/actions/team';
 
 type CreateTeamDialogContentProps = {
   closeDialog: () => void;
 };
 
-type CreateTeamFormValues = z.infer<typeof createTeamSchema>;
+type CreateTeamFormValues = CreateTeamInput;
 const defaultValues: Partial<CreateTeamFormValues> = {
   name: '',
 };
@@ -32,52 +30,39 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
 
   const { toast } = useToast();
 
+  const reset = useCallback(() => {
+    form.reset();
+    closeDialog();
+  }, [form, closeDialog]);
+
   const onSubmit = useCallback(
     async (data: CreateTeamFormValues) => {
-      try {
-        await createTeam(data.name);
+      const response = await createTeam(data);
+
+      if (response.success) {
         toast({
           title: `Successfully created ${data.name}`,
           description: 'Well done!',
         });
-        closeDialog();
+        reset();
         router.refresh();
-      } catch (err) {
-        if (err instanceof AxiosError) {
-          if (err.response?.status !== 400) {
-            toast({
-              title: `An unknown error occurred!`,
-              variant: 'destructive',
-            });
-            return;
-          }
-          const mappedZodErrorParseResult = await mappedZodErrorSchema.safeParseAsync(err.response.data);
-
-          if (!mappedZodErrorParseResult.success) {
-            toast({
-              title: `An unknown error occurred!`,
-              variant: 'destructive',
-            });
-            return;
-          }
-
-          const formError = mappedZodErrorParseResult.data.error;
-          setZodErrorsOnForm(form, formError);
-        } else {
-          toast({
-            title: `An unknown error occurred!`,
-            variant: 'destructive',
-          });
-        }
+        router.push(`/dashboard/${response.data.id}`);
+        return;
       }
-    },
-    [toast, form, closeDialog, router]
-  );
 
-  const onReset = useCallback(() => {
-    form.reset();
-    closeDialog();
-  }, [form, closeDialog]);
+      const mappedZodErrorParseResult = await mappedZodErrorSchema.safeParseAsync(response.error);
+      if (!mappedZodErrorParseResult.success) {
+        toast({
+          title: `An unknown error occurred!`,
+          variant: 'destructive',
+        });
+        return;
+      }
+      const formError = mappedZodErrorParseResult.data.error;
+      setZodErrorsOnForm(form, formError);
+    },
+    [toast, form, router, reset]
+  );
 
   return (
     <DialogContent>
@@ -107,10 +92,12 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
             </div>
           </div>
           <DialogFooter>
-            <Button type='reset' variant='outline' onClick={onReset}>
+            <Button type='reset' variant='outline' onClick={reset}>
               Cancel
             </Button>
-            <Button type='submit'>Continue</Button>
+            <Button type='submit' disabled={form.formState.isSubmitting}>
+              Continue
+            </Button>
           </DialogFooter>
         </form>
       </Form>
