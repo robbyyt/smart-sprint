@@ -45,7 +45,6 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
           description: 'Well done!',
         });
         reset();
-        router.refresh();
         router.push(`/dashboard/${response.data.id}`);
         return;
       }
