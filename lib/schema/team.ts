@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { z } from 'zod';
 
 const MIN_TEAM_NAME_CHARS = 3;

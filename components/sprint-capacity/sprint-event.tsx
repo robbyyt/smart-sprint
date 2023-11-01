@@ -29,6 +29,7 @@ const SprintEvent = ({ title, description, type, duration, row, column }: Sprint
       style={{
         gridColumnStart: column,
         gridRowStart: row,
+        gridColumnEnd: column,
       }}
       className={cn('m-1 flex flex-col rounded-lg border p-1', getColorClassesForType(type))}
     >

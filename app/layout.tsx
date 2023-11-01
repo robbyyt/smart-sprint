@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en'>
-      <body className={cn(inter.className, 'm-0 min-h-screen p-0')}>
+      <body className={cn(inter.className, 'm-0 p-0')}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

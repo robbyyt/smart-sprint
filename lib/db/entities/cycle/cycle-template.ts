@@ -1,13 +1,10 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 
-// TODO: Generate migration for this
 export interface CycleTemplateTable extends BaseEntity {
-  durationInDays: number;
-  hoursInWorkDay: number;
-  dayStart: string;
-  includeWeekends: boolean;
-  timeZone: string;
+  durationInWorkDays: number;
+  startWeekDay: number;
+  timezone: string;
   teamId: number;
 }
 
