@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: { teamId: string } }) {
 
   return (
     <DashboardLayout currentTeamId={team.id}>
-      <TeamSetup />
+      <TeamSetup teamId={team.id} />
     </DashboardLayout>
   );
 }

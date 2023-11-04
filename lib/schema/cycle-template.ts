@@ -1,13 +1,17 @@
 import { z } from 'zod';
-import { SUPPORTED_TIMEZONES } from '../constants/timezones';
+import { SUPPORTED_TIMEZONES_SET } from '../constants/timezones';
 
-export const createCycleTemplateSchema = z.object({
-  durationInWorkDays: z.number({ required_error: 'Duration in work days is required!' }),
-  startWeekDay: z.number({ required_error: 'You must pick a starting date!' }).min(1).max(5),
+export const setupCycleSchema = z.object({
+  teamId: z.number(),
+  interval: z
+    .object({
+      from: z.coerce.date(),
+      to: z.coerce.date(),
+    })
+    .refine((data) => data.to > data.from, { message: 'End of interval should come after the beginning!' }),
   timezone: z
     .string()
-    .refine((timezone) => SUPPORTED_TIMEZONES.has(timezone), 'Must be one of the supported timezones!'),
-  teamId: z.number(),
+    .refine((timezone) => SUPPORTED_TIMEZONES_SET.has(timezone), 'Must be one of the supported timezones!'),
 });
 
-export type CreateCycleTemplateInput = z.infer<typeof createCycleTemplateSchema>;
+export type SetupCycleInput = z.infer<typeof setupCycleSchema>;
