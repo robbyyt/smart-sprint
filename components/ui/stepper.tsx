@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/styles';
 
 import { Button } from './button';
 import { Separator } from './separator';
-import { useMediaQuery } from './use-stepper';
+import { useMediaQuery, useStepper } from './use-stepper';
 
 /********** Context **********/
 
@@ -194,6 +194,9 @@ interface StepStatus {
   isCurrentStep?: boolean;
 }
 
+export type StepContent<T> = { component: React.ComponentType<T>; props?: T };
+export type StepContentProps = Partial<ReturnType<typeof useStepper>>;
+
 interface StepAndStatusProps extends StepProps, StepStatus {
   additionalClassName?: {
     button?: string;
@@ -342,7 +345,7 @@ const StepLabel = ({
     <div
       aria-current={isCurrentStep ? 'step' : undefined}
       className={cn(
-        'flex w-max flex-col justify-center',
+        'flex flex-col justify-center',
         isLabelVertical ? 'items-center text-center' : 'items-start text-left'
       )}
     >

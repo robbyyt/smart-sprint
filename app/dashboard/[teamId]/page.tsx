@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { teamId: string } }) {
 
   return (
     <DashboardLayout currentTeamId={team.id}>
-      {/* <TeamSetup teamId={team.id} /> */}
+      <TeamSetup teamId={team.id} />
       {/* <DataTable columns={columns} data={sampleTasks} /> */}
     </DashboardLayout>
   );
