@@ -14,7 +14,7 @@ import { format } from 'date-fns';
 export default function GeneralInformationFormStep() {
   const { control, setValue } = useFormContext<SetupCycleInput>();
   return (
-    <div className='ite flex flex-col gap-2'>
+    <div className='flex flex-col gap-4'>
       <FormField
         control={control}
         name='timezone'

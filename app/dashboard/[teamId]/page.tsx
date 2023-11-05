@@ -4,6 +4,9 @@ import { redirect } from 'next/navigation';
 import DashboardLayout from '@/components/layout/dashboard-layout';
 import { setTeamId } from './context';
 import TeamSetup from '@/components/dashboard/team-setup';
+import { columns } from '@/components/task-list/data-table/columns';
+import { sampleTasks } from '@/components/task-list/mock-data';
+import DataTable from '@/components/task-list/data-table';
 
 export default async function Page({ params }: { params: { teamId: string } }) {
   const numericTeamId: TeamId = Number(params.teamId);
@@ -19,7 +22,8 @@ export default async function Page({ params }: { params: { teamId: string } }) {
 
   return (
     <DashboardLayout currentTeamId={team.id}>
-      <TeamSetup teamId={team.id} />
+      {/* <TeamSetup teamId={team.id} /> */}
+      {/* <DataTable columns={columns} data={sampleTasks} /> */}
     </DashboardLayout>
   );
 }
