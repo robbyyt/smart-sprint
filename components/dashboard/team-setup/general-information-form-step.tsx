@@ -92,7 +92,8 @@ export default function GeneralInformationFormStep() {
               </PopoverContent>
             </Popover>
             <FormDescription>You will be able to change your mind later.</FormDescription>
-            <FormMessage />
+            <FormMessage selector='from' />
+            <FormMessage selector='to' />
           </FormItem>
         )}
       />

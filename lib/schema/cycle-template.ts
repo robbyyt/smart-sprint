@@ -6,7 +6,7 @@ export const setupCycleSchema = z.object({
   interval: z
     .object({
       from: z.coerce.date(),
-      to: z.coerce.date(),
+      to: z.coerce.date({ required_error: 'An end date is required!', invalid_type_error: 'An end date is required!' }),
     })
     .refine((data) => data.to > data.from, { message: 'End of interval should come after the beginning!' }),
   timezone: z

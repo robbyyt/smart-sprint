@@ -157,7 +157,7 @@ Steps.displayName = 'Steps';
 
 /********** Step **********/
 
-const stepVariants = cva('relative flex flex-row gap-2', {
+const stepVariants = cva('relative flex flex-row', {
   variants: {
     isLastStep: {
       true: 'flex-[0_0_auto] justify-end',
@@ -379,7 +379,7 @@ const Connector = React.memo(({ isCompletedStep, children, isLastStep }: Connect
       <div
         data-highlighted={isCompletedStep}
         className={cn(
-          'ms-5 mt-1 flex h-auto min-h-[2rem] flex-1 self-stretch border-l-2 ps-8',
+          'ms-5 flex h-auto min-h-[2rem] flex-1 self-stretch border-l-2 ps-8',
           isLastStep ? 'min-h-0 border-transparent' : '',
           isCompletedStep ? 'border-green-700' : ''
         )}

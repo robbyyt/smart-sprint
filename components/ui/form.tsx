@@ -30,12 +30,12 @@ const FormField = <
   );
 };
 
-const useFormField = () => {
+const useFormField = (selector?: string) => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
 
-  const fieldState = getFieldState(fieldContext.name, formState);
+  const fieldState = getFieldState(selector ? `${fieldContext.name}.${selector}` : fieldContext.name, formState);
 
   if (!fieldContext) {
     throw new Error('useFormField should be used within <FormField>');
@@ -108,22 +108,22 @@ const FormDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
 );
 FormDescription.displayName = 'FormDescription';
 
-const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { error, formMessageId } = useFormField();
-    const body = error ? String(error?.message) : children;
-
-    if (!body) {
-      return null;
-    }
-
-    return (
-      <p ref={ref} id={formMessageId} className={cn('text-sm font-medium text-destructive', className)} {...props}>
-        {body}
-      </p>
-    );
+const FormMessage = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement> & { selector?: string }
+>(({ className, children, selector, ...props }, ref) => {
+  const { error, formMessageId } = useFormField(selector);
+  const body = error ? String(error.message) : children;
+  if (!body) {
+    return null;
   }
-);
+
+  return (
+    <p ref={ref} id={formMessageId} className={cn('text-sm font-medium text-destructive', className)} {...props}>
+      {body}
+    </p>
+  );
+});
 FormMessage.displayName = 'FormMessage';
 
 export { useFormField, Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField };
