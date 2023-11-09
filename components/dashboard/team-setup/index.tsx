@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import useTeamSetupSteps, { teamSetupSteps } from './use-team-setup-steps';
 import { Button } from '@/components/ui/button';
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons';
+import getDefaultMeetings from './utils/get-default-meetings';
 
 type TeamSetupProps = { teamId: TeamId };
 
@@ -27,7 +28,7 @@ export default function TeamSetup({ teamId }: TeamSetupProps) {
   const { activeStep, nextStep, stepContents } = useTeamSetupSteps(form);
 
   useEffect(() => {
-    form.reset({ timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+    form.reset({ timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, meetings: getDefaultMeetings() });
   }, [form]);
 
   const { component: StepContent, props: stepContentProps } = stepContents[activeStep];
