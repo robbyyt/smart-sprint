@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils/styles';
 
 import { Button } from './button';
 import { Separator } from './separator';
-import { useMediaQuery } from './use-stepper';
+import { useMediaQuery, useStepper } from './use-stepper';
 
 /********** Context **********/
 
@@ -157,7 +157,7 @@ Steps.displayName = 'Steps';
 
 /********** Step **********/
 
-const stepVariants = cva('relative flex flex-row gap-2', {
+const stepVariants = cva('relative flex flex-row', {
   variants: {
     isLastStep: {
       true: 'flex-[0_0_auto] justify-end',
@@ -193,6 +193,9 @@ interface StepStatus {
   isCompletedStep?: boolean;
   isCurrentStep?: boolean;
 }
+
+export type StepContent<T> = { component: React.ComponentType<T>; props?: T };
+export type StepContentProps = Partial<ReturnType<typeof useStepper>>;
 
 interface StepAndStatusProps extends StepProps, StepStatus {
   additionalClassName?: {
@@ -342,7 +345,7 @@ const StepLabel = ({
     <div
       aria-current={isCurrentStep ? 'step' : undefined}
       className={cn(
-        'flex w-max flex-col justify-center',
+        'flex flex-col justify-center',
         isLabelVertical ? 'items-center text-center' : 'items-start text-left'
       )}
     >
@@ -376,7 +379,7 @@ const Connector = React.memo(({ isCompletedStep, children, isLastStep }: Connect
       <div
         data-highlighted={isCompletedStep}
         className={cn(
-          'ms-5 mt-1 flex h-auto min-h-[2rem] flex-1 self-stretch border-l-2 ps-8',
+          'ms-5 flex h-auto min-h-[2rem] flex-1 self-stretch border-l-2 ps-8',
           isLastStep ? 'min-h-0 border-transparent' : '',
           isCompletedStep ? 'border-green-700' : ''
         )}
