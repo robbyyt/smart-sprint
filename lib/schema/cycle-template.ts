@@ -1,16 +1,7 @@
 import { z } from 'zod';
 import { SUPPORTED_TIMEZONES_SET } from '../constants/timezones';
 
-export const MEETING_RECURRENCE_VALUES = [
-  'NO_REPEAT',
-  'EVERY_WEEKDAY',
-  'DAILY',
-  'WEEKLY',
-  'MONTHLY',
-  'CUSTOM',
-] as const;
-
-const CUSTOM_RECURRENCE_UNIT = ['DAY', 'WEEK', 'MONTH'] as const;
+export const MEETING_RECURRENCE_VALUES = ['NO_REPEAT', 'EVERY_WEEKDAY', 'DAILY', 'WEEKLY', 'MONTHLY'] as const;
 
 export type MeetingRecurrence = (typeof MEETING_RECURRENCE_VALUES)[number];
 
@@ -20,20 +11,16 @@ export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
   DAILY: 'Daily',
   WEEKLY: 'Weekly',
   MONTHLY: 'Monthly',
-  CUSTOM: 'Custom',
 };
 
+const MIN_MEETING_NAME_CHARS = 3;
+
 const meetingSchema = z.object({
-  name: z.string(),
-  start: z.string(),
-  end: z.string(),
+  name: z.string().min(3, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}`),
+  startDate: z.coerce.date(),
+  startTime: z.string(),
+  endTime: z.string(),
   recurrence: z.enum(MEETING_RECURRENCE_VALUES),
-  customRecurrenceDetails: z
-    .object({
-      unit: z.enum(CUSTOM_RECURRENCE_UNIT),
-      value: z.number().int().positive(),
-    })
-    .optional(),
 });
 
 export type MeetingInput = z.infer<typeof meetingSchema>;
@@ -50,5 +37,6 @@ export const setupCycleSchema = z.object({
     .string()
     .refine((timezone) => SUPPORTED_TIMEZONES_SET.has(timezone), 'Must be one of the supported timezones!'),
   meetings: z.array(meetingSchema),
+  saveOnlyTemplate: z.boolean(),
 });
 export type SetupCycleInput = z.infer<typeof setupCycleSchema>;

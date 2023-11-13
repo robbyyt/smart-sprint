@@ -14,11 +14,11 @@ export const teamSetupSteps: StepConfig[] = [
   },
   {
     label: 'Meetings',
-    description: 'The time killers. Setup once and re-use on each sprint start.',
+    description: 'The most common time consumers. Setup once and re-use in the future.',
   },
   {
     label: 'Start planning',
-    description: 'Or save your preferences as a template for future use.',
+    description: 'Or save the information you filled in as a template for future sprints.',
   },
 ];
 
@@ -42,11 +42,13 @@ export default function useTeamSetupSteps(
   const nextStep = async (): Promise<void> => {
     switch (stepper.activeStep) {
       case 0:
-        const isValid = await form.trigger(['timezone', 'interval']);
-        if (isValid) stepper.nextStep();
+        if (await form.trigger(['timezone', 'interval'])) stepper.nextStep();
+        return;
+      case 1:
+        if (await form.trigger(['meetings'])) stepper.nextStep();
         return;
       default:
-        nextStep();
+        stepper.nextStep();
         return;
     }
   };

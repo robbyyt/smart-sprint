@@ -75,9 +75,10 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
             <CommandList>
               <CommandInput placeholder='Search...' />
               <CommandEmpty>No item found.</CommandEmpty>
-              <CommandGroup key={''} heading='Team'>
+              <CommandGroup heading='Team'>
                 {teams.map((team) => (
                   <CommandItem
+                    value={team.id.toString()}
                     key={team.id}
                     onSelect={() => {
                       setOpen(false);
@@ -93,7 +94,6 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
                       />
                       <AvatarFallback>SC</AvatarFallback>
                     </Avatar>
-                    <p className='hidden'>{team.id}</p>
                     <p className='overflow-hidden text-ellipsis'>{team.name}</p>
                     <CheckIcon
                       className={cn('ml-auto h-4 w-4', selectedTeam?.id === team.id ? 'opacity-100' : 'opacity-0')}
