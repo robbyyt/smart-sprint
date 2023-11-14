@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import isTime from 'validator/lib/isTime';
 import { SUPPORTED_TIMEZONES_SET } from '../constants/timezones';
 
 export const MEETING_RECURRENCE_VALUES = ['NO_REPEAT', 'EVERY_WEEKDAY', 'DAILY', 'WEEKLY', 'MONTHLY'] as const;
@@ -15,13 +16,15 @@ export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
 
 const MIN_MEETING_NAME_CHARS = 3;
 
-const meetingSchema = z.object({
-  name: z.string().min(3, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}`),
-  startDate: z.coerce.date(),
-  startTime: z.string(),
-  endTime: z.string(),
-  recurrence: z.enum(MEETING_RECURRENCE_VALUES),
-});
+const meetingSchema = z
+  .object({
+    name: z.string().min(3, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}`),
+    startDate: z.coerce.date(),
+    startTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),
+    endTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),
+    recurrence: z.enum(MEETING_RECURRENCE_VALUES),
+  })
+  .refine((meeting) => meeting.endTime > meeting.startTime, { message: 'End time has to be after the start time' });
 
 export type MeetingInput = z.infer<typeof meetingSchema>;
 

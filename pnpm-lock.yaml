@@ -19,6 +19,7 @@ specifiers:
   '@types/node': 20.5.6
   '@types/react': 18.2.33
   '@types/react-dom': 18.2.14
+  '@types/validator': ^13.11.6
   autoprefixer: 10.4.15
   class-variance-authority: ^0.7.0
   clsx: ^2.0.0
@@ -47,6 +48,7 @@ specifiers:
   ts-node: ^10.9.1
   tsx: ^3.13.0
   typescript: 5.2.2
+  validator: ^13.11.0
   zod: ^3.21.4
 
 dependencies:
@@ -83,12 +85,14 @@ dependencies:
   tailwindcss: 3.3.3_ts-node@10.9.1
   tailwindcss-animate: 1.0.6_tailwindcss@3.3.3
   typescript: 5.2.2
+  validator: 13.11.0
   zod: 3.21.4
 
 devDependencies:
   '@types/node': 20.5.6
   '@types/react': 18.2.33
   '@types/react-dom': 18.2.14
+  '@types/validator': 13.11.6
   autoprefixer: 10.4.15_postcss@8.4.28
   dotenv: 16.3.1
   eslint: 8.48.0
@@ -1601,6 +1605,10 @@ packages:
 
   /@types/scheduler/0.16.5:
     resolution: {integrity: sha512-s/FPdYRmZR8SjLWGMCuax7r3qCWQw9QKHzXVukAuuIJkXkDRwp+Pu5LMIVFi0Fxbav35WURicYr8u1QsoybnQw==}
+
+  /@types/validator/13.11.6:
+    resolution: {integrity: sha512-HUgHujPhKuNzgNXBRZKYexwoG+gHKU+tnfPqjWXFghZAnn73JElicMkuSKJyLGr9JgyA8IgK7fj88IyA9rwYeQ==}
+    dev: true
 
   /@typescript-eslint/parser/6.9.0_w2g2uv42be7wag4oipwkfv43p4:
     resolution: {integrity: sha512-GZmjMh4AJ/5gaH4XF2eXA8tMnHWP+Pm1mjQR2QN4Iz+j/zO04b9TOvJYOX2sCNIQHtRStKTxRY1FX7LhpJT4Gw==}
@@ -4328,6 +4336,11 @@ packages:
 
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
+
+  /validator/13.11.0:
+    resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}
+    engines: {node: '>= 0.10'}
+    dev: false
 
   /watchpack/2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}
