@@ -1,6 +1,6 @@
 import { StepConfig, StepContent, StepContentProps } from '@/components/ui/stepper';
 import { useStepper } from '@/components/ui/use-stepper';
-import { SetupCycleInput } from '@/lib/schema/cycle-template';
+import { SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import GeneralInformationFormStep from './general-information-form-step';

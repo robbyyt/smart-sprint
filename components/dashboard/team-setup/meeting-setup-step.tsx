@@ -1,5 +1,5 @@
 import { FormField } from '@/components/ui/form';
-import { SetupCycleInput } from '@/lib/schema/cycle-template';
+import { SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import MeetingSetupRow from './meeting-setup-row';
 import { Button } from '@/components/ui/button';

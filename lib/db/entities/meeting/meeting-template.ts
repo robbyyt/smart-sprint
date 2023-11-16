@@ -1,10 +1,9 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 
-// TODO: Generate migration for this
-export interface MeetingTemplateTable extends BaseEntity {
+export interface MeetingTemplateTable extends BaseEntity<string> {
   cycleTemplateId: number;
-  day: number;
+  offsetFromCycleStartInDays: number;
   startTime: string;
   endTime: string;
   timeZone: string;

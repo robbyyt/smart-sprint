@@ -15,10 +15,14 @@ export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
 };
 
 const MIN_MEETING_NAME_CHARS = 3;
+const MAX_MEETING_NAME_CHARS = 45;
 
 const meetingSchema = z
   .object({
-    name: z.string().min(3, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}`),
+    name: z
+      .string()
+      .min(MIN_MEETING_NAME_CHARS, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}!`)
+      .max(MAX_MEETING_NAME_CHARS, `Meeting name must not be longer than ${MAX_MEETING_NAME_CHARS}!`),
     startDate: z.coerce.date(),
     startTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),
     endTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),

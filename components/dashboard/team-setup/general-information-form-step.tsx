@@ -7,7 +7,7 @@ import { SUPPORTED_TIMEZONES, SUPPORTED_TIMEZONES_SET } from '@/lib/constants/ti
 import { cn } from '@/lib/utils/styles';
 import { CalendarIcon, CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useFormContext } from 'react-hook-form';
-import { SetupCycleInput } from '@/lib/schema/cycle-template';
+import { SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 

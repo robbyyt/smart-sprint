@@ -3,16 +3,17 @@ import { PlanetScaleDialect } from 'kysely-planetscale';
 import * as dotenv from 'dotenv';
 
 import { CycleTemplateTable, CycleTable } from './entities/cycle';
-import { MeetingTemplateTable, MeetingTemplateParticipantsTable } from './entities/meeting';
+import { MeetingTemplateTable, MeetingTemplateParticipantsTable, MeetingTable } from './entities/meeting';
 import { TeamTable, TeamMembersTable } from './entities/team';
 import { AccountTable, SessionTable, UserTable, VerificationTokenTable } from './entities/auth';
 
 dotenv.config();
 
 interface Database {
-  cycleTemplate: CycleTemplateTable;
   cycle: CycleTable;
+  cycleTemplate: CycleTemplateTable;
 
+  meeting: MeetingTable;
   meetingTemplate: MeetingTemplateTable;
   meetingTemplateParticipants: MeetingTemplateParticipantsTable;
 

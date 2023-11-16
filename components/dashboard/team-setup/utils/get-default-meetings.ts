@@ -1,4 +1,4 @@
-import { MEETING_RECURRENCE_VALUES, MeetingInput } from '@/lib/schema/cycle-template';
+import { MEETING_RECURRENCE_VALUES, MeetingInput } from '@/lib/schema/setup-cycle';
 
 export default function getDefaultMeetings(startDate: Date): MeetingInput[] {
   return [

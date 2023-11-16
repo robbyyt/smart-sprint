@@ -1,6 +1,6 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { SetupCycleInput, setupCycleSchema } from '@/lib/schema/cycle-template';
+import { SetupCycleInput, setupCycleSchema } from '@/lib/schema/setup-cycle';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { TeamId } from '@/lib/db/entities/team';
 import { Form } from '@/components/ui/form';

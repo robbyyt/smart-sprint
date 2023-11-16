@@ -8,7 +8,7 @@ export async function up(db: Kysely<any>): Promise<void> {
         .createTable('team')
         .addColumn('id', 'integer', (col) => col.autoIncrement().primaryKey())
         .addColumn('name', 'varchar(50)', (col) => col.notNull())
-        .addColumn('ownerId', 'char(36)', (col) => col.references('User.id').notNull())
+        .addColumn('owner_id', 'char(36)', (col) => col.references('User.id').notNull())
     ).execute();
   });
 }
