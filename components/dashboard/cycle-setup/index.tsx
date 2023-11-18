@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import useTeamSetupSteps, { teamSetupSteps } from './use-team-setup-steps';
 import { Button } from '@/components/ui/button';
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons';
+import { setupCycle } from '@/lib/data/cycle/actions/setup-cycle';
 
 type TeamSetupProps = { teamId: TeamId };
 
@@ -19,14 +20,14 @@ const getDefaultFormValues = (teamId: TeamId): Partial<SetupCycleInput> => ({
   saveOnlyTemplate: false,
 });
 
-export default function TeamSetup({ teamId }: TeamSetupProps) {
+export default function CycleSetup({ teamId }: TeamSetupProps) {
   const form = useForm<SetupCycleInput>({
     resolver: zodResolver(setupCycleSchema),
     defaultValues: getDefaultFormValues(teamId),
   });
 
-  const onSubmit = form.handleSubmit((values) => {
-    console.log(values);
+  const onSubmit = form.handleSubmit(async (values) => {
+    await setupCycle(values);
   });
 
   const { activeStep, nextStep, prevStep, isLastStep, stepContents } = useTeamSetupSteps(form);

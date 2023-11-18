@@ -8,9 +8,9 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Input } from '@/components/ui/input';
 import { CreateTeamInput, createTeamSchema } from '@/lib/schema/team';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { useToast } from '../ui/use-toast';
+import { toast } from '../ui/use-toast';
 import { mappedZodErrorSchema, setZodErrorsOnForm } from '@/lib/utils/zod';
-import { createTeam } from '@/lib/data/team/actions/team';
+import { createTeam } from '@/lib/data/team/actions/create-team';
 
 type CreateTeamDialogContentProps = {
   closeDialog: () => void;
@@ -27,8 +27,6 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
     defaultValues,
   });
   const router = useRouter();
-
-  const { toast } = useToast();
 
   const reset = useCallback(() => {
     form.reset();
@@ -61,7 +59,7 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
       const formError = mappedZodErrorParseResult.data.error;
       setZodErrorsOnForm(form, formError);
     },
-    [toast, form, router, reset]
+    [form, router, reset]
   );
 
   return (

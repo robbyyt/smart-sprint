@@ -23,7 +23,7 @@ export async function createTeam(teamInput: CreateTeamInput): Promise<CreateTeam
     return { success: false, error: mapZodError(parseResult.error) };
   }
   try {
-    const insertResponse = await TeamRepo.createTeam({ name: parseResult.data.name, ownerId: session.user.id });
+    const insertResponse = await TeamRepo.create({ name: parseResult.data.name, ownerId: session.user.id });
     return { success: true, data: { id: Number(insertResponse.insertId) } };
   } catch (err) {
     console.error('Error creating team', err);

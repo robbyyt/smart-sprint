@@ -1,10 +1,7 @@
 import { z } from 'zod';
 import isTime from 'validator/lib/isTime';
 import { SUPPORTED_TIMEZONES_SET } from '../constants/timezones';
-
-export const MEETING_RECURRENCE_VALUES = ['NO_REPEAT', 'EVERY_WEEKDAY', 'DAILY', 'WEEKLY', 'MONTHLY'] as const;
-
-export type MeetingRecurrence = (typeof MEETING_RECURRENCE_VALUES)[number];
+import { MeetingRecurrence, MEETING_RECURRENCE_VALUES } from '@/lib/types/meeting';
 
 export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
   NO_REPEAT: 'No repeat',

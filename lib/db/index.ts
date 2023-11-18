@@ -1,4 +1,4 @@
-import { CamelCasePlugin, Kysely, KyselyConfig } from 'kysely';
+import { CamelCasePlugin, Kysely, KyselyConfig, Transaction as KyselyTransaction } from 'kysely';
 import { PlanetScaleDialect } from 'kysely-planetscale';
 import * as dotenv from 'dotenv';
 
@@ -26,7 +26,7 @@ interface Database {
   VerificationToken: VerificationTokenTable;
 }
 
-const KYSELY_OPTIONS: KyselyConfig = {
+export const KYSELY_OPTIONS: KyselyConfig = {
   dialect: new PlanetScaleDialect({
     url: process.env.DATABASE_URL,
   }),
@@ -34,10 +34,6 @@ const KYSELY_OPTIONS: KyselyConfig = {
   plugins: [new CamelCasePlugin()],
 };
 
-export const db = new Kysely<Database>({
-  dialect: new PlanetScaleDialect({
-    url: process.env.DATABASE_URL,
-  }),
+export const db = new Kysely<Database>(KYSELY_OPTIONS);
 
-  plugins: [new CamelCasePlugin()],
-});
+export type Transaction = KyselyTransaction<Database>;

@@ -7,8 +7,9 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { MEETING_RECURRENCE_LABELS, MEETING_RECURRENCE_VALUES, SetupCycleInput } from '@/lib/schema/setup-cycle';
+import { MEETING_RECURRENCE_LABELS, SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { cn } from '@/lib/utils/styles';
+import { MEETING_RECURRENCE_VALUES } from '@/lib/types/meeting';
 
 type MeetingRowProps = { index: number; remove: UseFieldArrayRemove; cycleStartDate: Date; cycleEndDate: Date };
 

@@ -2,11 +2,11 @@ import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 
 export interface MeetingTable extends BaseEntity<string> {
-  cycleId: number;
+  cycleId: string;
   startDate: Date;
   startTime: string;
   endTime: string;
-  timeZone: string;
+  timezone: string;
   meetingTemplateId: string | null;
 }
 

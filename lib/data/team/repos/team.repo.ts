@@ -1,14 +1,14 @@
 import 'server-only';
 import { UserId } from '@/lib/db/entities/auth';
-import { db } from '../../../db';
-import { NewTeam, TeamId } from '../../../db/entities/team';
+import { db } from '@/lib/db';
+import { NewTeam, TeamId } from '@/lib/db/entities/team';
 
 export class TeamRepo {
   static async getUserTeamMembership(userId: UserId) {
     return this.getTeamForUserBaseQuery(userId).select(['team.id', 'team.name']).execute();
   }
 
-  static async createTeam({ name, ownerId }: NewTeam) {
+  static async create({ name, ownerId }: NewTeam) {
     return db
       .insertInto('team')
       .values({

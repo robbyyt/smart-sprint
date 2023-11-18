@@ -1,12 +1,15 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
+import { CycleTemplateId } from '../cycle';
+import { MeetingRecurrence } from '@/lib/types/meeting';
 
 export interface MeetingTemplateTable extends BaseEntity<string> {
-  cycleTemplateId: number;
-  offsetFromCycleStartInDays: number;
+  cycleTemplateId: CycleTemplateId;
+  originalStartDate: Date;
+  recurrence: MeetingRecurrence;
   startTime: string;
   endTime: string;
-  timeZone: string;
+  timezone: string;
 }
 
 export type MeetingTemplate = Selectable<MeetingTemplateTable>;
