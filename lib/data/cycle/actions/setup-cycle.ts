@@ -1,10 +1,11 @@
 'use server';
 import 'server-only';
 import { redirect } from 'next/navigation';
+import { InsertResult } from 'kysely';
 import { getServerSession } from '@/lib/auth';
 import { Transaction, db } from '@/lib/db';
 import { SetupCycleInput, setupCycleSchema } from '@/lib/schema/setup-cycle';
-import { MappedZodError, mapZodError } from '@/lib/utils/zod';
+import { mapZodError } from '@/lib/utils/zod';
 import { TransactionalCycleTemplateRepo } from '../repos/cycle-template.repo';
 import { TransactionalMeetingTemplateRepo } from '../../meeting/repos/meeting-template.repo';
 import { UserId } from '@/lib/db/entities/auth';
@@ -12,8 +13,9 @@ import { MeetingTemplate, NewMeeting, NewMeetingTemplate } from '@/lib/db/entiti
 import { CycleId, CycleTemplateId } from '@/lib/db/entities/cycle';
 import { TransactionalCycleRepo } from '../repos/cycle.repo';
 import { TransactionalMeetingRepo } from '../../meeting/repos/meeting.repo';
+import { ActionError } from '@/lib/types/actions';
 
-type SetupCycleOutput = { success: true } | { success: false; error: MappedZodError['error'] | 'unknown' };
+type SetupCycleOutput = { success: true } | ActionError;
 
 export async function setupCycle(setupCycleInput: SetupCycleInput): Promise<SetupCycleOutput> {
   const session = await getServerSession();
@@ -54,7 +56,7 @@ async function setupCycleAndMeetingTemplates(
   const cycleTemplateRepo = new TransactionalCycleTemplateRepo(trx);
   const meetingTemplateRepo = new TransactionalMeetingTemplateRepo(trx);
 
-  const [cycleTemplate] = await cycleTemplateRepo.create({
+  const { insertId: cycleTemplateInsertId } = await cycleTemplateRepo.create({
     teamId,
     timezone,
     startDate: interval.from,
@@ -62,31 +64,33 @@ async function setupCycleAndMeetingTemplates(
     createdBy: actingUserId,
   });
 
-  if (!cycleTemplate?.id) {
+  if (!cycleTemplateInsertId) {
     throw new Error('No cycle template id was returned');
   }
 
-  const meetingTemplateInputs = mapMeetingInputsToMeetingTemplates(meetings, cycleTemplate.id, timezone);
+  const cycleTemplateId = Number(cycleTemplateInsertId);
 
-  const insertedMeetingTemplates = await meetingTemplateRepo.createMultiple(meetingTemplateInputs);
+  const meetingTemplateInputs = mapMeetingInputsToMeetingTemplates(meetings, cycleTemplateId, timezone);
+
+  const meetingTemplateInsertResult = await meetingTemplateRepo.createMultiple(meetingTemplateInputs);
 
   return {
-    cycleTemplateId: cycleTemplate.id,
-    meetingTemplates: insertedMeetingTemplates,
+    cycleTemplateId: cycleTemplateId,
+    meetingTemplates: appendIdsToMeetingTemplateInputs(meetingTemplateInputs, meetingTemplateInsertResult),
   };
 }
 
 async function setupCycleAndMeetings(
   cycleTemplateId: CycleTemplateId,
   { interval, timezone, teamId }: SetupCycleInput,
-  meetingTemplates: MeetingTemplate[],
+  meetingTemplates: Omit<MeetingTemplate, 'createdAt' | 'updatedAt'>[],
   actingUserId: UserId,
   trx: Transaction
 ) {
   const cycleRepo = new TransactionalCycleRepo(trx);
   const meetingRepo = new TransactionalMeetingRepo(trx);
 
-  const [cycle] = await cycleRepo.create({
+  const { insertId: cycleInsertId } = await cycleRepo.create({
     cycleTemplateId,
     startDate: interval.from,
     endDate: interval.to,
@@ -95,11 +99,13 @@ async function setupCycleAndMeetings(
     teamId,
   });
 
-  if (!cycle?.id) {
-    throw new Error('No cycle template id was returned');
+  if (!cycleInsertId) {
+    throw new Error('No cycle id was returned');
   }
 
-  const meetingsToInsert = mapTemplatesToMeetings(meetingTemplates, cycle.id);
+  const cycleId = Number(cycleInsertId);
+
+  const meetingsToInsert = mapTemplatesToMeetings(meetingTemplates, cycleId);
 
   await meetingRepo.createMultiple(meetingsToInsert);
 }
@@ -119,13 +125,29 @@ function mapMeetingInputsToMeetingTemplates(
   }));
 }
 
-function mapTemplatesToMeetings(meetingTemplates: MeetingTemplate[], cycleId: CycleId): NewMeeting[] {
-  return meetingTemplates.map(({ id: meetingTemplateId, timezone, originalStartDate, startTime, endTime }) => ({
-    cycleId,
-    meetingTemplateId,
-    timezone,
-    startDate: originalStartDate,
-    startTime,
-    endTime,
+function mapTemplatesToMeetings(
+  meetingTemplates: Omit<MeetingTemplate, 'createdAt' | 'updatedAt'>[],
+  cycleId: CycleId
+): NewMeeting[] {
+  return meetingTemplates.map(
+    ({ id: meetingTemplateId, originalStartDate: startDate, cycleTemplateId: _cycleTemplateId, ...template }) => ({
+      cycleId,
+      meetingTemplateId,
+      startDate,
+      ...template,
+    })
+  );
+}
+
+function appendIdsToMeetingTemplateInputs(
+  meetingTemplateInputs: NewMeetingTemplate[],
+  insertResults: InsertResult[]
+): Omit<MeetingTemplate, 'createdAt' | 'updatedAt'>[] {
+  if (meetingTemplateInputs.length !== insertResults.length) {
+    throw new Error('Input arrays should have the same length');
+  }
+  return meetingTemplateInputs.map((template, index) => ({
+    ...template,
+    id: Number(insertResults[index].insertId),
   }));
 }

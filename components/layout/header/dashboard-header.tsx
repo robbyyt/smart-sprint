@@ -7,6 +7,7 @@ import { Team } from '@/lib/db/entities/team';
 
 export type DashboardHeaderProps = { currentTeamId: Team['id'] | null };
 
+// TODO: Refactor this intro two separate components
 export default async function DashboardHeader({ currentTeamId }: DashboardHeaderProps) {
   const teams = await getTeamMembership();
   return (

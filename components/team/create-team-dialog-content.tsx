@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { CreateTeamInput, createTeamSchema } from '@/lib/schema/team';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { toast } from '../ui/use-toast';
-import { mappedZodErrorSchema, setZodErrorsOnForm } from '@/lib/utils/zod';
+import { processFormActionError } from '@/lib/utils/zod';
 import { createTeam } from '@/lib/data/team/actions/create-team';
 
 type CreateTeamDialogContentProps = {
@@ -35,29 +35,20 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
 
   const onSubmit = useCallback(
     async (data: CreateTeamFormValues) => {
-      const response = await createTeam(data);
+      const submitResponse = await createTeam(data);
 
-      if (response.success) {
+      if (submitResponse.success) {
         toast({
           title: `Successfully created ${data.name}`,
           description: 'Well done!',
         });
         reset();
         router.refresh();
-        router.push(`/dashboard/${response.data.id}`);
+        router.push(`/teams/${submitResponse.data.id}`);
         return;
       }
 
-      const mappedZodErrorParseResult = await mappedZodErrorSchema.safeParseAsync(response.error);
-      if (!mappedZodErrorParseResult.success) {
-        toast({
-          title: `An unknown error occurred!`,
-          variant: 'destructive',
-        });
-        return;
-      }
-      const formError = mappedZodErrorParseResult.data.error;
-      setZodErrorsOnForm(form, formError);
+      processFormActionError(form, submitResponse.error);
     },
     [form, router, reset]
   );

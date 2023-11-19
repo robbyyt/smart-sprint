@@ -9,6 +9,6 @@ export class TransactionalCycleTemplateRepo extends BaseTransactionalRepo {
   }
 
   async create(newCycleTemplate: NewCycleTemplate) {
-    return this.queryRunner.insertInto('cycleTemplate').values(newCycleTemplate).returning('id').execute();
+    return this.queryRunner.insertInto('cycleTemplate').values(newCycleTemplate).executeTakeFirst();
   }
 }

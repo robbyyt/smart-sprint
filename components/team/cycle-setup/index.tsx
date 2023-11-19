@@ -1,17 +1,19 @@
 'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { SetupCycleInput, setupCycleSchema } from '@/lib/schema/setup-cycle';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { TeamId } from '@/lib/db/entities/team';
 import { Form } from '@/components/ui/form';
-
-import { useEffect } from 'react';
 import { Step, Steps } from '@/components/ui/stepper';
 import { Separator } from '@/components/ui/separator';
 import useTeamSetupSteps, { teamSetupSteps } from './use-team-setup-steps';
 import { Button } from '@/components/ui/button';
 import { DoubleArrowRightIcon } from '@radix-ui/react-icons';
 import { setupCycle } from '@/lib/data/cycle/actions/setup-cycle';
+import { processFormActionError } from '@/lib/utils/zod';
+import { H1 } from '@/components/ui/typography';
 
 type TeamSetupProps = { teamId: TeamId };
 
@@ -25,9 +27,17 @@ export default function CycleSetup({ teamId }: TeamSetupProps) {
     resolver: zodResolver(setupCycleSchema),
     defaultValues: getDefaultFormValues(teamId),
   });
+  const router = useRouter();
 
   const onSubmit = form.handleSubmit(async (values) => {
-    await setupCycle(values);
+    const submitResponse = await setupCycle(values);
+
+    if (submitResponse.success) {
+      router.refresh();
+      return;
+    }
+
+    processFormActionError(form, submitResponse.error);
   });
 
   const { activeStep, nextStep, prevStep, isLastStep, stepContents } = useTeamSetupSteps(form);
@@ -42,9 +52,7 @@ export default function CycleSetup({ teamId }: TeamSetupProps) {
     <Form {...form}>
       <div>
         <div>
-          <h1 className='mb-4 scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl'>
-            Setup your first development cycle
-          </h1>
+          <H1 className='mb-4 scroll-m-20 tracking-tight'>Setup your first development cycle</H1>
           <p className='mb-2 leading-7 '>...and start iterating towards your next big goal. ⭐️</p>
           <Separator />
         </div>

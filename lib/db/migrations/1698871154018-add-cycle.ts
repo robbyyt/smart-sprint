@@ -1,4 +1,4 @@
-import { Kysely, sql } from 'kysely';
+import { Kysely } from 'kysely';
 import { withTimestamps } from '../helpers';
 
 export async function up(db: Kysely<any>): Promise<void> {
@@ -6,7 +6,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     await withTimestamps(
       trx.schema
         .createTable('cycle_template')
-        .addColumn('id', 'char(36)', (col) => col.primaryKey().defaultTo(sql`(uuid())`))
+        .addColumn('id', 'integer', (col) => col.autoIncrement().primaryKey())
         .addColumn('start_date', 'date', (col) => col.notNull())
         .addColumn('end_date', 'date', (col) => col.notNull())
         .addColumn('timezone', 'varchar(36)', (col) => col.notNull())
@@ -17,13 +17,13 @@ export async function up(db: Kysely<any>): Promise<void> {
     await withTimestamps(
       trx.schema
         .createTable('cycle')
-        .addColumn('id', 'char(36)', (col) => col.primaryKey().defaultTo(sql`(uuid())`))
+        .addColumn('id', 'integer', (col) => col.autoIncrement().primaryKey())
         .addColumn('start_date', 'date', (col) => col.notNull())
         .addColumn('end_date', 'date', (col) => col.notNull())
         .addColumn('timezone', 'varchar(36)', (col) => col.notNull())
         .addColumn('team_id', 'integer', (col) => col.references('team.id').notNull())
         .addColumn('created_by', 'char(36)', (col) => col.references('User.id').notNull())
-        .addColumn('cycle_template_id', 'char(36)', (col) => col.references('cycle_template.id').notNull())
+        .addColumn('cycle_template_id', 'integer', (col) => col.references('cycle_template.id').notNull())
     ).execute();
   });
 }

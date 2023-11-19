@@ -4,11 +4,10 @@ import { getServerSession } from '@/lib/auth';
 import { CreateTeamInput, createTeamSchema } from '@/lib/schema/team';
 import { redirect } from 'next/navigation';
 import { TeamRepo } from '../repos/team.repo';
-import { MappedZodError, mapZodError } from '@/lib/utils/zod';
+import { mapZodError } from '@/lib/utils/zod';
+import { ActionError } from '@/lib/types/actions';
 
-type CreateTeamOutput =
-  | { success: true; data: { id: number } }
-  | { success: false; error: MappedZodError['error'] | 'unknown' };
+type CreateTeamOutput = { success: true; data: { id: number } } | ActionError;
 
 export async function createTeam(teamInput: CreateTeamInput): Promise<CreateTeamOutput> {
   const session = await getServerSession();

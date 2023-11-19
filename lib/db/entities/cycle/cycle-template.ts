@@ -1,12 +1,13 @@
 import { Insertable, Selectable, Updateable } from 'kysely';
 import { BaseEntity } from '../../types';
 import { UserId } from '../auth';
+import { TeamId } from '../team';
 
-export interface CycleTemplateTable extends BaseEntity<string> {
+export interface CycleTemplateTable extends BaseEntity {
   startDate: Date;
   endDate: Date;
   timezone: string;
-  teamId: number;
+  teamId: TeamId;
   createdBy: UserId;
 }
 

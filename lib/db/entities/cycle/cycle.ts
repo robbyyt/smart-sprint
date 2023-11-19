@@ -5,7 +5,7 @@ import { TeamId } from '../team';
 import { CycleTemplateId } from './cycle-template';
 
 // TODO: Generate migration for this
-export interface CycleTable extends BaseEntity<string> {
+export interface CycleTable extends BaseEntity {
   startDate: Date;
   endDate: Date;
   cycleTemplateId: CycleTemplateId;

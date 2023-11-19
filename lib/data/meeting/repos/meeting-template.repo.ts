@@ -9,6 +9,6 @@ export class TransactionalMeetingTemplateRepo extends BaseTransactionalRepo {
   }
 
   async createMultiple(newMeetingTemplates: NewMeetingTemplate[]) {
-    return this.queryRunner.insertInto('meetingTemplate').values(newMeetingTemplates).returningAll().execute();
+    return this.queryRunner.insertInto('meetingTemplate').values(newMeetingTemplates).execute();
   }
 }

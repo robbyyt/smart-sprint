@@ -1,3 +1,4 @@
+import { toast } from '@/components/ui/use-toast';
 import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import { ZodError, z } from 'zod';
 
@@ -33,4 +34,21 @@ export const setZodErrorsOnForm = <TFieldValues extends FieldValues>(
       form.setError(stringifiedPath, { message: message });
     }
   }
+};
+
+export const processFormActionError = async <TFieldValues extends FieldValues>(
+  form: UseFormReturn<TFieldValues>,
+  error: unknown
+) => {
+  const mappedZodErrorParseResult = await mappedZodErrorSchema.safeParseAsync(error);
+
+  if (!mappedZodErrorParseResult.success) {
+    toast({
+      title: `An unknown error occurred!`,
+      variant: 'destructive',
+    });
+    return;
+  }
+  const formError = mappedZodErrorParseResult.data.error;
+  setZodErrorsOnForm(form, formError);
 };

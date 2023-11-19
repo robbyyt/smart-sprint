@@ -3,7 +3,8 @@
  * @see https://v0.dev/t/WuzBMBNLxxJ
  */
 import Link from 'next/link';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
+import { H1 } from '@/components/ui/typography';
 
 export default function Hero() {
   return (
@@ -11,9 +12,7 @@ export default function Hero() {
       <div className='container px-4 md:px-6'>
         <div className='flex flex-col items-center space-y-4 text-center text-primary-foreground'>
           <div className='space-y-2'>
-            <h1 className='text-3xl font-bold tracking-tighter text-primary sm:text-4xl md:text-5xl lg:text-6xl/none'>
-              Welcome to SmartSprint
-            </h1>
+            <H1 variant='hero'>Welcome to SmartSprint</H1>
             <p className='mx-auto max-w-[700px] text-xl text-primary md:text-2xl lg:text-3xl'>
               Streamline software iteration. Integrated with your favorite tools
             </p>
