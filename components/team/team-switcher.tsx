@@ -50,7 +50,7 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
             >
               <Avatar className='mr-2 h-5 w-5'>
                 <AvatarImage src={`https://avatar.vercel.sh/${selectedTeam.name}.png`} alt={selectedTeam.name} />
-                <AvatarFallback>SC</AvatarFallback>
+                <AvatarFallback>{selectedTeam.name[0]}</AvatarFallback>
               </Avatar>
               {selectedTeam?.name}
               <CaretSortIcon className='ml-auto h-4 w-4 shrink-0 opacity-50' />

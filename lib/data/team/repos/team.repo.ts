@@ -2,10 +2,24 @@ import 'server-only';
 import { UserId } from '@/lib/db/entities/auth';
 import { db } from '@/lib/db';
 import { NewTeam, TeamId } from '@/lib/db/entities/team';
+import { sql, SqlBool } from 'kysely';
 
 export class TeamRepo {
   static async getUserTeamMembership(userId: UserId) {
-    return this.getTeamForUserBaseQuery(userId).select(['team.id', 'team.name']).execute();
+    return this.getTeamForUserBaseQuery(userId)
+      .select(({ eb }) => [
+        'team.id',
+        'team.name',
+        eb
+          .exists(
+            eb
+              .selectFrom('cycleTemplate')
+              .selectAll()
+              .where('cycleTemplate.teamId', '=', sql`team.id`)
+          )
+          .as('setupComplete'),
+      ])
+      .execute();
   }
 
   static async create({ name, ownerId }: NewTeam) {

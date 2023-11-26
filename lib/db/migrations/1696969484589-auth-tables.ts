@@ -1,5 +1,5 @@
 import { Kysely, sql } from 'kysely';
-import { withTimestamps } from '../helpers';
+import { withTimestamps } from '../utils/migration-helpers';
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.transaction().execute(async (trx) => {

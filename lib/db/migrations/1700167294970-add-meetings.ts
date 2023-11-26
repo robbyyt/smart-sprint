@@ -1,5 +1,5 @@
 import { Kysely } from 'kysely';
-import { withTimestamps, toEnumType } from '../helpers';
+import { withTimestamps, toEnumType } from '../utils/migration-helpers';
 import { MEETING_RECURRENCE_VALUES } from '@/lib/types/meeting';
 
 export async function up(db: Kysely<any>): Promise<void> {

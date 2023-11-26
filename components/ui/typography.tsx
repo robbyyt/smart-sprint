@@ -44,3 +44,26 @@ export const H2 = React.forwardRef<HTMLHeadingElement, H2Props>(({ className, va
 ));
 
 H2.displayName = 'H2';
+
+export interface H2Props extends React.HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof h2Variants> {}
+
+const h3Variants = cva('font-semibold text-primary', {
+  variants: {
+    variant: {
+      default: 'text-l md:text-xl lg:text-2xl',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+export interface H3Props extends React.HTMLAttributes<HTMLHeadingElement>, VariantProps<typeof h3Variants> {}
+
+export const H3 = React.forwardRef<HTMLHeadingElement, H3Props>(({ className, variant, children, ...props }, ref) => (
+  <h3 className={cn(h3Variants({ variant, className }))} ref={ref} {...props}>
+    {children}
+  </h3>
+));
+
+H3.displayName = 'H3';
