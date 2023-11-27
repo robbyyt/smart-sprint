@@ -1,7 +1,9 @@
 import { redirect } from 'next/navigation';
-import CycleSetup from '@/components/team/cycle-setup';
 import { TeamId } from '@/lib/db/entities/team';
 import { getTeamById } from '@/lib/db/services/team.service';
+import { columns } from '@/components/task-list/data-table/columns';
+import { sampleTasks } from '@/components/task-list/mock-data';
+import DataTable from '@/components/task-list/data-table';
 import { setTeamId } from './context';
 
 export default async function Page({ params }: { params: { teamId: string } }) {
@@ -14,5 +16,5 @@ export default async function Page({ params }: { params: { teamId: string } }) {
   else {
     setTeamId(team.id);
   }
-  return <CycleSetup teamId={numericTeamId} />;
+  return <DataTable columns={columns} data={sampleTasks} />;
 }
