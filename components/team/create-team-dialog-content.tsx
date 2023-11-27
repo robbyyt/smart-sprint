@@ -8,9 +8,9 @@ import { DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTit
 import { Input } from '@/components/ui/input';
 import { CreateTeamInput, createTeamSchema } from '@/lib/schema/team';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
-import { useToast } from '../ui/use-toast';
-import { mappedZodErrorSchema, setZodErrorsOnForm } from '@/lib/utils/zod';
-import { createTeam } from '@/lib/data/team/actions/team';
+import { toast } from '../ui/use-toast';
+import { processFormActionError } from '@/lib/utils/zod';
+import { createTeam } from '@/lib/data/team/actions/create-team';
 
 type CreateTeamDialogContentProps = {
   closeDialog: () => void;
@@ -28,8 +28,6 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
   });
   const router = useRouter();
 
-  const { toast } = useToast();
-
   const reset = useCallback(() => {
     form.reset();
     closeDialog();
@@ -37,30 +35,22 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
 
   const onSubmit = useCallback(
     async (data: CreateTeamFormValues) => {
-      const response = await createTeam(data);
+      const submitResponse = await createTeam(data);
 
-      if (response.success) {
+      if (submitResponse.success) {
         toast({
           title: `Successfully created ${data.name}`,
           description: 'Well done!',
         });
         reset();
-        router.push(`/dashboard/${response.data.id}`);
+        router.refresh();
+        router.push(`/teams/${submitResponse.data.id}`);
         return;
       }
 
-      const mappedZodErrorParseResult = await mappedZodErrorSchema.safeParseAsync(response.error);
-      if (!mappedZodErrorParseResult.success) {
-        toast({
-          title: `An unknown error occurred!`,
-          variant: 'destructive',
-        });
-        return;
-      }
-      const formError = mappedZodErrorParseResult.data.error;
-      setZodErrorsOnForm(form, formError);
+      processFormActionError(form, submitResponse.error);
     },
-    [toast, form, router, reset]
+    [form, router, reset]
   );
 
   return (

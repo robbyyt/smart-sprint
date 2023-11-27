@@ -12,3 +12,7 @@ export function withTimestamps<TB extends string, C extends string = never>(
         .notNull()
     );
 }
+
+export function toEnumType(values: readonly string[]) {
+  return sql`enum(${sql.join(values.map(sql.lit))})`;
+}

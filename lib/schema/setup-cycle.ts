@@ -1,18 +1,7 @@
 import { z } from 'zod';
+import isTime from 'validator/lib/isTime';
 import { SUPPORTED_TIMEZONES_SET } from '../constants/timezones';
-
-export const MEETING_RECURRENCE_VALUES = [
-  'NO_REPEAT',
-  'EVERY_WEEKDAY',
-  'DAILY',
-  'WEEKLY',
-  'MONTHLY',
-  'CUSTOM',
-] as const;
-
-const CUSTOM_RECURRENCE_UNIT = ['DAY', 'WEEK', 'MONTH'] as const;
-
-export type MeetingRecurrence = (typeof MEETING_RECURRENCE_VALUES)[number];
+import { MeetingRecurrence, MEETING_RECURRENCE_VALUES } from '@/lib/types/meeting';
 
 export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
   NO_REPEAT: 'No repeat',
@@ -20,21 +9,23 @@ export const MEETING_RECURRENCE_LABELS: Record<MeetingRecurrence, string> = {
   DAILY: 'Daily',
   WEEKLY: 'Weekly',
   MONTHLY: 'Monthly',
-  CUSTOM: 'Custom',
 };
 
-const meetingSchema = z.object({
-  name: z.string(),
-  start: z.string(),
-  end: z.string(),
-  recurrence: z.enum(MEETING_RECURRENCE_VALUES),
-  customRecurrenceDetails: z
-    .object({
-      unit: z.enum(CUSTOM_RECURRENCE_UNIT),
-      value: z.number().int().positive(),
-    })
-    .optional(),
-});
+const MIN_MEETING_NAME_CHARS = 3;
+const MAX_MEETING_NAME_CHARS = 45;
+
+const meetingSchema = z
+  .object({
+    name: z
+      .string()
+      .min(MIN_MEETING_NAME_CHARS, `Meeting name must have a length of at least ${MIN_MEETING_NAME_CHARS}!`)
+      .max(MAX_MEETING_NAME_CHARS, `Meeting name must not be longer than ${MAX_MEETING_NAME_CHARS}!`),
+    startDate: z.coerce.date(),
+    startTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),
+    endTime: z.string().refine((val) => isTime(val), { message: 'Invalid time value!' }),
+    recurrence: z.enum(MEETING_RECURRENCE_VALUES),
+  })
+  .refine((meeting) => meeting.endTime > meeting.startTime, { message: 'End time has to be after the start time' });
 
 export type MeetingInput = z.infer<typeof meetingSchema>;
 
@@ -50,5 +41,6 @@ export const setupCycleSchema = z.object({
     .string()
     .refine((timezone) => SUPPORTED_TIMEZONES_SET.has(timezone), 'Must be one of the supported timezones!'),
   meetings: z.array(meetingSchema),
+  saveOnlyTemplate: z.boolean(),
 });
 export type SetupCycleInput = z.infer<typeof setupCycleSchema>;

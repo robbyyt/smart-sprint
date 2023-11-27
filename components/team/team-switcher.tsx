@@ -50,7 +50,7 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
             >
               <Avatar className='mr-2 h-5 w-5'>
                 <AvatarImage src={`https://avatar.vercel.sh/${selectedTeam.name}.png`} alt={selectedTeam.name} />
-                <AvatarFallback>SC</AvatarFallback>
+                <AvatarFallback>{selectedTeam.name[0]}</AvatarFallback>
               </Avatar>
               {selectedTeam?.name}
               <CaretSortIcon className='ml-auto h-4 w-4 shrink-0 opacity-50' />
@@ -75,9 +75,10 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
             <CommandList>
               <CommandInput placeholder='Search...' />
               <CommandEmpty>No item found.</CommandEmpty>
-              <CommandGroup key={''} heading='Team'>
+              <CommandGroup heading='Team'>
                 {teams.map((team) => (
                   <CommandItem
+                    value={team.id.toString()}
                     key={team.id}
                     onSelect={() => {
                       setOpen(false);
@@ -93,7 +94,6 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
                       />
                       <AvatarFallback>SC</AvatarFallback>
                     </Avatar>
-                    <p className='hidden'>{team.id}</p>
                     <p className='overflow-hidden text-ellipsis'>{team.name}</p>
                     <CheckIcon
                       className={cn('ml-auto h-4 w-4', selectedTeam?.id === team.id ? 'opacity-100' : 'opacity-0')}

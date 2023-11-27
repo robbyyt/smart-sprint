@@ -7,7 +7,7 @@ import { SUPPORTED_TIMEZONES, SUPPORTED_TIMEZONES_SET } from '@/lib/constants/ti
 import { cn } from '@/lib/utils/styles';
 import { CalendarIcon, CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useFormContext } from 'react-hook-form';
-import { SetupCycleInput } from '@/lib/schema/cycle-template';
+import { SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 
@@ -47,10 +47,10 @@ export default function GeneralInformationFormStep() {
                           setValue('timezone', timezone);
                         }}
                       >
-                        <CheckIcon
-                          className={cn('mr-2 h-4 w-4', timezone === field.value ? 'opacity-100' : 'opacity-0')}
-                        />
                         {timezone}
+                        <CheckIcon
+                          className={cn('ml-auto h-4 w-4', timezone === field.value ? 'opacity-100' : 'opacity-0')}
+                        />
                       </CommandItem>
                     ))}
                   </CommandGroup>
@@ -72,7 +72,8 @@ export default function GeneralInformationFormStep() {
               <PopoverTrigger asChild>
                 <FormControl>
                   <Button
-                    variant={'outline'}
+                    type='button'
+                    variant='outline'
                     className={cn('w-[200px] pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                   >
                     {field.value ? (
@@ -81,14 +82,21 @@ export default function GeneralInformationFormStep() {
                         {field.value?.to ? ` - ${format(field.value.to, 'dd/M/yy')}` : ''}
                       </span>
                     ) : (
-                      <span>Pick a date</span>
+                      <span>Pick a range of dates</span>
                     )}
                     <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
                   </Button>
                 </FormControl>
               </PopoverTrigger>
               <PopoverContent className='w-auto p-0' align='start'>
-                <Calendar mode='range' selected={field.value} onSelect={field.onChange} initialFocus />
+                <Calendar
+                  disabled={{ before: new Date() }}
+                  fromMonth={new Date()}
+                  mode='range'
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  initialFocus
+                />
               </PopoverContent>
             </Popover>
             <FormDescription>You will be able to change your mind later.</FormDescription>

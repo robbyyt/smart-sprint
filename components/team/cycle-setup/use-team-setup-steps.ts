@@ -1,6 +1,6 @@
 import { StepConfig, StepContent, StepContentProps } from '@/components/ui/stepper';
 import { useStepper } from '@/components/ui/use-stepper';
-import { SetupCycleInput } from '@/lib/schema/cycle-template';
+import { SetupCycleInput } from '@/lib/schema/setup-cycle';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import GeneralInformationFormStep from './general-information-form-step';
@@ -14,11 +14,11 @@ export const teamSetupSteps: StepConfig[] = [
   },
   {
     label: 'Meetings',
-    description: 'The time killers. Setup once and re-use on each sprint start.',
+    description: 'The most common time consumers. Setup once and re-use in the future.',
   },
   {
     label: 'Start planning',
-    description: 'Or save your preferences as a template for future use.',
+    description: 'Or save the information you filled in as a template for future sprints.',
   },
 ];
 
@@ -42,11 +42,13 @@ export default function useTeamSetupSteps(
   const nextStep = async (): Promise<void> => {
     switch (stepper.activeStep) {
       case 0:
-        const isValid = await form.trigger(['timezone', 'interval']);
-        if (isValid) stepper.nextStep();
+        if (await form.trigger(['timezone', 'interval'])) stepper.nextStep();
+        return;
+      case 1:
+        if (await form.trigger(['meetings'])) stepper.nextStep();
         return;
       default:
-        nextStep();
+        stepper.nextStep();
         return;
     }
   };
