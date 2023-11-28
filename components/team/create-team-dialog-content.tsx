@@ -44,7 +44,7 @@ export default function CreateTeamDialogContent({ closeDialog }: CreateTeamDialo
         });
         reset();
         router.refresh();
-        router.push(`/teams/${submitResponse.data.id}`);
+        router.push(`/teams/${submitResponse.data.id}/setup`);
         return;
       }
 

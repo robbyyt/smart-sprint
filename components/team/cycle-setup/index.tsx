@@ -34,6 +34,7 @@ export default function CycleSetup({ teamId }: TeamSetupProps) {
 
     if (submitResponse.success) {
       router.refresh();
+      router.push(`/teams/${teamId}`);
       return;
     }
 
