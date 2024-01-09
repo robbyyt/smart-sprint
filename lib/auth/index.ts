@@ -5,6 +5,7 @@ import AtlassianProvider from 'next-auth/providers/atlassian';
 import { KyselyAdapter } from '@auth/kysely-adapter';
 
 import { db } from '../db';
+import { ATLASSIAN_CLIENT_ID, ATLASSIAN_CLIENT_SECRET } from '../data/jira/constants';
 
 export const authConfig = {
   // TODO: Remove this comment once a fix is found for the typing
@@ -13,8 +14,8 @@ export const authConfig = {
   adapter: KyselyAdapter(db),
   providers: [
     AtlassianProvider({
-      clientId: process.env.ATLASSIAN_CLIENT_ID ?? '',
-      clientSecret: process.env.ATLASSIAN_CLIENT_SECRET ?? '',
+      clientId: ATLASSIAN_CLIENT_ID,
+      clientSecret: ATLASSIAN_CLIENT_SECRET,
       authorization: {
         params: {
           scope: 'read:jira-work write:jira-work read:jira-work read:jira-user read:me offline_access',

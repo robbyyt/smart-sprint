@@ -82,7 +82,7 @@ export default function TeamSwitcher({ className, teams, currentTeamId }: TeamSw
                     key={team.id}
                     onSelect={() => {
                       setOpen(false);
-                      router.push(`/dashboard/${team.id}`);
+                      router.push(`/teams/${team.id}`);
                     }}
                     className='text-sm'
                   >

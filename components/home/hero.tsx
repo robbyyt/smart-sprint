@@ -12,9 +12,9 @@ export default function Hero() {
       <div className='container px-4 md:px-6'>
         <div className='flex flex-col items-center space-y-4 text-center text-primary-foreground'>
           <div className='space-y-2'>
-            <H1 variant='hero'>Welcome to SmartSprint</H1>
+            <H1 variant='hero'>Welcome to EstiMate</H1>
             <p className='mx-auto max-w-[700px] text-xl text-primary md:text-2xl lg:text-3xl'>
-              Streamline software iteration. Integrated with your favorite tools
+              Streamline software iteration with top notch estimation tracking. Integrated with your favorite tools.
             </p>
           </div>
           <div className='space-x-4'>

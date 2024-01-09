@@ -5,6 +5,8 @@ import { columns } from '@/components/task-list/data-table/columns';
 import { sampleTasks } from '@/components/task-list/mock-data';
 import DataTable from '@/components/task-list/data-table';
 import { setTeamId } from './context';
+import SprintGridView from '@/components/sprint-capacity/sprint-grid-view';
+import TaskWidget from '@/components/jira/task-widget';
 
 export default async function Page({ params }: { params: { teamId: string } }) {
   const numericTeamId: TeamId = Number(params.teamId);
@@ -16,5 +18,10 @@ export default async function Page({ params }: { params: { teamId: string } }) {
   else {
     setTeamId(team.id);
   }
-  return <DataTable columns={columns} data={sampleTasks} />;
+  return (
+    <div className='flex flex-col gap-4'>
+      <SprintGridView />
+      <TaskWidget />
+    </div>
+  );
 }
